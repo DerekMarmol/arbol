@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ArbolBinarioApp
 {
-    // Clase para representar un nodo del árbol binario
+
     class Nodo
     {
         public int Valor { get; set; }
@@ -18,7 +18,6 @@ namespace ArbolBinarioApp
         }
     }
 
-    // Clase principal del Árbol Binario
     class ArbolBinario
     {
         public Nodo Raiz { get; private set; }
@@ -28,7 +27,6 @@ namespace ArbolBinarioApp
             Raiz = null;
         }
 
-        // Método para insertar un valor en el árbol
         public void Insertar(int valor)
         {
             Raiz = InsertarRecursivo(Raiz, valor);
@@ -36,28 +34,24 @@ namespace ArbolBinarioApp
 
         private Nodo InsertarRecursivo(Nodo nodo, int valor)
         {
-            // Si el nodo es nulo, crear un nuevo nodo
+
             if (nodo == null)
             {
                 return new Nodo(valor);
             }
 
-            // Si el valor es menor, insertarlo en el subárbol izquierdo
             if (valor < nodo.Valor)
             {
                 nodo.Izquierda = InsertarRecursivo(nodo.Izquierda, valor);
             }
-            // Si el valor es mayor, insertarlo en el subárbol derecho
             else if (valor > nodo.Valor)
             {
                 nodo.Derecha = InsertarRecursivo(nodo.Derecha, valor);
             }
-            // Si el valor ya existe, no hacer nada (árbol binario de búsqueda no permite duplicados)
 
             return nodo;
         }
 
-        // Calcular la altura del árbol
         public int Altura()
         {
             return CalcularAltura(Raiz);
@@ -76,11 +70,8 @@ namespace ArbolBinarioApp
             return Math.Max(alturaIzquierda, alturaDerecha) + 1;
         }
 
-        // Calcular el grado del árbol (número máximo de hijos de un nodo)
         public int Grado()
         {
-            // En un árbol binario, el grado máximo es 2 (izquierda y derecha)
-            // Pero vamos a calcularlo para permitir extensibilidad en caso de árboles n-arios
             return CalcularGrado(Raiz);
         }
 
@@ -101,7 +92,6 @@ namespace ArbolBinarioApp
             return Math.Max(hijosActuales, Math.Max(gradoIzquierda, gradoDerecha));
         }
 
-        // Calcular el orden del árbol (promedio de nodos por nivel)
         public double Orden()
         {
             if (Raiz == null)
@@ -125,7 +115,6 @@ namespace ArbolBinarioApp
             return 1 + ContarNodos(nodo.Izquierda) + ContarNodos(nodo.Derecha);
         }
 
-        // Método para obtener la cantidad de nodos por nivel
         public Dictionary<int, int> NodosPorNivel()
         {
             Dictionary<int, int> nodosPorNivel = new Dictionary<int, int>();
@@ -151,8 +140,6 @@ namespace ArbolBinarioApp
             ContarNodosPorNivel(nodo.Derecha, nivel + 1, nodosPorNivel);
         }
 
-        // Métodos para recorridos del árbol
-        // Recorrido en Preorden (Raíz-Izquierda-Derecha)
         public List<int> Preorden()
         {
             List<int> resultado = new List<int>();
@@ -167,12 +154,11 @@ namespace ArbolBinarioApp
                 return;
             }
 
-            resultado.Add(nodo.Valor); // Primero la raíz
-            RecorridoPreorden(nodo.Izquierda, resultado); // Luego subárbol izquierdo
-            RecorridoPreorden(nodo.Derecha, resultado); // Finalmente subárbol derecho
+            resultado.Add(nodo.Valor);
+            RecorridoPreorden(nodo.Izquierda, resultado); 
+            RecorridoPreorden(nodo.Derecha, resultado); 
         }
 
-        // Recorrido en Inorden (Izquierda-Raíz-Derecha)
         public List<int> Inorden()
         {
             List<int> resultado = new List<int>();
@@ -187,12 +173,11 @@ namespace ArbolBinarioApp
                 return;
             }
 
-            RecorridoInorden(nodo.Izquierda, resultado); // Primero subárbol izquierdo
-            resultado.Add(nodo.Valor); // Luego la raíz
-            RecorridoInorden(nodo.Derecha, resultado); // Finalmente subárbol derecho
+            RecorridoInorden(nodo.Izquierda, resultado); 
+            resultado.Add(nodo.Valor); 
+            RecorridoInorden(nodo.Derecha, resultado);
         }
 
-        // Recorrido en Postorden (Izquierda-Derecha-Raíz)
         public List<int> Postorden()
         {
             List<int> resultado = new List<int>();
@@ -207,13 +192,11 @@ namespace ArbolBinarioApp
                 return;
             }
 
-            RecorridoPostorden(nodo.Izquierda, resultado); // Primero subárbol izquierdo
-            RecorridoPostorden(nodo.Derecha, resultado); // Luego subárbol derecho
-            resultado.Add(nodo.Valor); // Finalmente la raíz
+            RecorridoPostorden(nodo.Izquierda, resultado);
+            RecorridoPostorden(nodo.Derecha, resultado); 
+            resultado.Add(nodo.Valor); 
         }
 
-        // Métodos para buscar un valor y registrar el camino seguido
-        // Búsqueda en Preorden
         public (bool encontrado, List<int> camino, int comparaciones) BuscarPreorden(int valor)
         {
             List<int> camino = new List<int>();
@@ -250,7 +233,6 @@ namespace ArbolBinarioApp
             return false;
         }
 
-        // Búsqueda en Inorden
         public (bool encontrado, List<int> camino, int comparaciones) BuscarInorden(int valor)
         {
             List<int> camino = new List<int>();
@@ -287,7 +269,6 @@ namespace ArbolBinarioApp
             return false;
         }
 
-        // Búsqueda en Postorden
         public (bool encontrado, List<int> camino, int comparaciones) BuscarPostorden(int valor)
         {
             List<int> camino = new List<int>();
@@ -324,7 +305,6 @@ namespace ArbolBinarioApp
             return false;
         }
 
-        // Método optimizado para buscar utilizando las propiedades del BST (Binary Search Tree)
         public (bool encontrado, List<int> camino, int comparaciones) BuscarBST(int valor)
         {
             List<int> camino = new List<int>();
@@ -358,7 +338,6 @@ namespace ArbolBinarioApp
             }
         }
 
-        // Método para imprimir el árbol de forma visual
         public void ImprimirArbol()
         {
             if (Raiz == null)
@@ -378,20 +357,16 @@ namespace ArbolBinarioApp
                 return;
             }
 
-            // Imprimir subárbol derecho primero
-            ImprimirArbolRecursivo(nodo.Derecha, nivel + 1, altura);
 
-            // Imprimir el nodo actual
+            ImprimirArbolRecursivo(nodo.Derecha, nivel + 1, altura);
             string espacios = new string(' ', nivel * 4);
             string conexion = nivel > 0 ? "└── " : "";
             Console.WriteLine($"{espacios}{conexion}{nodo.Valor}");
 
-            // Imprimir subárbol izquierdo
             ImprimirArbolRecursivo(nodo.Izquierda, nivel + 1, altura);
         }
     }
 
-    // Clase principal del programa
     class Program
     {
         static void Main(string[] args)
@@ -469,7 +444,6 @@ namespace ArbolBinarioApp
             Console.WriteLine($"Grado del árbol: {arbol.Grado()}");
             Console.WriteLine($"Orden del árbol (promedio de nodos por nivel): {arbol.Orden():F2}");
             
-            // Mostrar la cantidad de nodos por nivel
             Dictionary<int, int> nodosPorNivel = arbol.NodosPorNivel();
             Console.WriteLine("\nNodos por nivel:");
             foreach (var par in nodosPorNivel)
@@ -512,23 +486,19 @@ namespace ArbolBinarioApp
             {
                 Console.WriteLine($"\nBuscando el valor {valor} utilizando diferentes recorridos...");
 
-                // Búsqueda en Preorden
+        
                 var resultadoPreorden = arbol.BuscarPreorden(valor);
                 MostrarResultadoBusqueda("Preorden", resultadoPreorden, valor);
 
-                // Búsqueda en Inorden
                 var resultadoInorden = arbol.BuscarInorden(valor);
                 MostrarResultadoBusqueda("Inorden", resultadoInorden, valor);
 
-                // Búsqueda en Postorden
                 var resultadoPostorden = arbol.BuscarPostorden(valor);
                 MostrarResultadoBusqueda("Postorden", resultadoPostorden, valor);
 
-                // Búsqueda BST (utilizando propiedades del árbol binario de búsqueda)
                 var resultadoBST = arbol.BuscarBST(valor);
                 MostrarResultadoBusqueda("BST Optimizado", resultadoBST, valor);
 
-                // Comparar eficiencia de los recorridos
                 CompararEficienciaRecorridos(resultadoPreorden, resultadoInorden, resultadoPostorden, resultadoBST);
             }
             else
@@ -569,7 +539,6 @@ namespace ArbolBinarioApp
                 { "BST Optimizado", resultadoBST.Item3 }
             };
 
-            // Ordenar por número de comparaciones (menor a mayor)
             var recorridosOrdenados = comparaciones.OrderBy(x => x.Value).ToList();
 
             Console.WriteLine("\nRanking de eficiencia (menor número de comparaciones es mejor):");
@@ -580,7 +549,6 @@ namespace ArbolBinarioApp
 
             Console.WriteLine($"\nEl recorrido más eficiente es: {recorridosOrdenados[0].Key}");
 
-            // Comparar con BST optimizado
             if (recorridosOrdenados[0].Key != "BST Optimizado")
             {
                 float mejora = (float)recorridosOrdenados[0].Value / resultadoBST.Item3;
